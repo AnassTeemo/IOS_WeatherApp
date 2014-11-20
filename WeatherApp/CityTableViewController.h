@@ -10,7 +10,7 @@
 
 @interface CityTableViewController : UITableViewController
 
-@property (strong, nonatomic) NSArray *cities;
+@property (strong, nonatomic) NSMutableArray *cities;
 @property (strong, nonatomic) NSString *fileName;
 
 

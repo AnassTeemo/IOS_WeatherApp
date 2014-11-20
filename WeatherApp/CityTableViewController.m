@@ -38,11 +38,11 @@
     //[self.tableView setBackgroundView:bg];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains
-    (NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    (NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *libraryDirectory = [paths objectAtIndex:0];
     
     //file name to write the data to using the documents directory:
-    self.fileName = [NSString stringWithFormat:@"%@/textfile.txt",documentsDirectory];
+    self.fileName = [NSString stringWithFormat:@"%@/textfile.txt",libraryDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
      if (![fileManager fileExistsAtPath:self.fileName]) {
      NSLog(@"there is no file");
@@ -98,18 +98,25 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.cities removeObjectAtIndex:indexPath.row];
+        BOOL success = [self.cities writeToFile:self.fileName atomically:YES];
+        if (!success)
+            NSLog(@"Error writing in file");
+        
+        [tableView reloadData];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.
@@ -154,7 +161,7 @@
 
 - (IBAction)doneAddingEndForSegue:(UIStoryboardSegue *)returnSegue {
     NewCityViewController *viewController = returnSegue.sourceViewController;
-    self.cities = [viewController.cities allObjects];
+    self.cities = [[viewController.cities allObjects] mutableCopy];
     
 }
 

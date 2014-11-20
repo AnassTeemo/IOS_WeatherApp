@@ -34,6 +34,20 @@
 
 }
 
++ (NSString *)dayFromDate:(NSString *)dateString{
+    
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate* myDate = [dateFormatter dateFromString:dateString];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"EEE"];
+    NSString *stringFromDate = [formatter stringFromDate:myDate];
+    
+   // NSLog(@"%@", stringFromDate);
+    return stringFromDate;
+}
+
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName
@@ -51,10 +65,13 @@
     else if ([current isEqualToString:@"time"]) {
         weatherCondition = [CityWeather new];
         if (parser == weekParser){
-            weatherCondition.dayValue = [NSString stringWithString:[attributeDict valueForKey:@"day"]];
+            NSString *str = [NSString stringWithString:[attributeDict valueForKey:@"day"]];
+            weatherCondition.dayValue = [XMLParser dayFromDate:str];
+            NSLog(@"%@", weatherCondition.dayValue);
         }
         else{
-            weatherCondition.dayValue = [NSString stringWithString:[attributeDict valueForKey:@"from"]];
+            weatherCondition.dayValue = [[attributeDict valueForKey:@"from"] substringWithRange:NSMakeRange(11,2)];
+            //[NSString stringWithString:[attributeDict valueForKey:@"from"]];
         }
     }
     else if ([current isEqualToString:@"symbol"]) {
@@ -63,8 +80,10 @@
     else if ([current isEqualToString:@"precipitation"]) {
         if ([attributeDict count] > 0) {
         weatherCondition.precipitationMode = [NSString stringWithString:[attributeDict valueForKey:@"type"]];
-        weatherCondition.precipitationValue = [[NSString stringWithString:[attributeDict valueForKey:@"value"]] integerValue];
+        //weatherCondition.precipitationValue = [[NSString stringWithString:[attributeDict valueForKey:@"value"]] integerValue];
     }
+        else
+            weatherCondition.precipitationMode = @"No rain";
     }
     else if ([current isEqualToString:@"windDirection"]) {
         weatherCondition.windDirection = [NSString stringWithString:[attributeDict valueForKey:@"code"]];

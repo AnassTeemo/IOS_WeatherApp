@@ -257,8 +257,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="EjL-YU-WSl"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="cv" destination="2ai-cJ-gOi" id="fOy-wx-039"/>
-                        <outlet property="cv2" destination="QJA-YR-fp1" id="cmU-eo-fqP"/>
+                        <outlet property="hourWeatherCollectionView" destination="2ai-cJ-gOi" id="TzG-jI-VHr"/>
                         <outlet property="labelCloudName" destination="QMu-gZ-nmo" id="VXf-wN-6Lk"/>
                         <outlet property="labelHumidity" destination="DD4-M8-XIN" id="wTn-gz-5RK"/>
                         <outlet property="labelPrecipitationValueMode" destination="DI5-Au-VPZ" id="ghJ-gp-4zg"/>
@@ -269,6 +268,7 @@
                         <outlet property="labelTemperatureValue" destination="GFe-1a-Ujh" id="v4h-aG-tbx"/>
                         <outlet property="labelWindSpeedDirection" destination="3g3-XG-25m" id="vcu-sT-pIA"/>
                         <outlet property="weatherIcon" destination="dDc-LI-hB4" id="tdO-X5-xbZ"/>
+                        <outlet property="weekWeatherCollectionView" destination="QJA-YR-fp1" id="Ahv-if-Fq8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mjf-CW-6J0" userLabel="First Responder" sceneMemberID="firstResponder"/>

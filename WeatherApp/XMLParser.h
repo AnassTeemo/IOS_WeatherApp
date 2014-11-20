@@ -20,4 +20,5 @@
 }
 - (NSMutableArray *) parseWeekWeather: (NSURL *) url;
 - (NSMutableArray *) parseHourlyWeather: (NSURL *) url;
++ (NSString *) dayFromDate:(NSString *)dateString;
 @end

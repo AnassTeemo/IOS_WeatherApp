@@ -48,38 +48,45 @@
     UIGraphicsEndImageContext();
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
  
-    self.cv.backgroundColor = [UIColor clearColor];
-    self.cv2.backgroundColor = [UIColor clearColor];
+    self.hourWeatherCollectionView.backgroundColor = [UIColor clearColor];
+    self.weekWeatherCollectionView.backgroundColor = [UIColor clearColor];
     //self.cv.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     
     xmlParser = [XMLParser new];
-    NSString *urlstring = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?q=%@&mode=xml&units=metric&cnt=7",self.name];
+    NSString *weekUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?q=%@&mode=xml&units=metric&cnt=7",self.name];
+    NSString *hourUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/?q=%@&mode=xml&units=metric",self.name];
 	
-	NSURL *url = [NSURL URLWithString:urlstring];
+	NSURL *weekUrl = [NSURL URLWithString:weekUrlString];
+    NSURL *hourUrl = [NSURL URLWithString:hourUrlString];
 	
-	cityweather = [NSArray arrayWithArray:[xmlParser parseWeekWeather:url]];
+	weekWeather = [NSArray arrayWithArray:[xmlParser parseWeekWeather:weekUrl]];
+    hourWeather = [NSArray arrayWithArray:[xmlParser parseHourlyWeather:hourUrl]];
+    
+    
+    id dayWeather = [weekWeather objectAtIndex:0];
     
     self.labelTemperatureValue.text = [NSString stringWithFormat:@"%d°C",
-                                       [[cityweather objectAtIndex:0] temperatureValue]];
+                                       [dayWeather temperatureValue]];
     
     self.labelTemperatureMinMax.text = [NSString stringWithFormat:@"%d/%d°C",
-                                        [[cityweather objectAtIndex:0] temperatureMin],
-                                        [[cityweather objectAtIndex:0] temperatureMax]];
+                                        [dayWeather temperatureMin],
+                                        [dayWeather temperatureMax]];
     
     self.labelCloudName.text = [NSString stringWithString:
-                                [[cityweather objectAtIndex:0] cloudName]];
+                                [dayWeather cloudName]];
     
     self.labelHumidity.text = [NSString stringWithFormat:@"%d%%",
-                               [[cityweather objectAtIndex:0] humidity]];
+                               [dayWeather humidity]];
     
     self.labelWindSpeedDirection.text = [NSString stringWithFormat:@"%d mph %@",
-                                         [[cityweather objectAtIndex:0] windSpeed],
-                                         [[cityweather objectAtIndex:0] windDirection]];
+                                         [dayWeather windSpeed],
+                                         [dayWeather windDirection]];
                                           
-    //self.labelPrecipitationValueMode.text = [NSString stringWithString:[[cityweather objectAtIndex:0] precipitationMode]];
+    self.labelPrecipitationValueMode.text = [NSString stringWithString:
+                                             [dayWeather precipitationMode]];
                                           
     self.labelPressure.text = [NSString stringWithFormat:@"%d hpa",
-                               [[cityweather objectAtIndex:0] pressure]];
+                               [dayWeather pressure]];
     
     self.labelSunRise.text = [NSString stringWithString:
                               [CityWeather sunRise]];
@@ -88,7 +95,7 @@
                              [CityWeather sunSet]];
     
     self.weatherIcon.image = [UIImage imageNamed:
-                             [[cityweather objectAtIndex:0] iconName]];
+                             [dayWeather iconName]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,15 +121,15 @@
 }
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if (collectionView == self.cv2){
-    return [cityweather count]-1;
+    if (collectionView == self.weekWeatherCollectionView){
+    return [weekWeather count]-1;
     }
     return 5;
 }
 
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (collectionView == self.cv) {
+    if (collectionView == self.hourWeatherCollectionView) {
         
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellHourlyWeather" forIndexPath:indexPath];
     
@@ -130,26 +137,28 @@
     UILabel *labelTempareture = (UILabel *)[cell viewWithTag:3];
     UIImageView *icon = (UIImageView *)[cell viewWithTag:2];
     
-    labelHour.text = @"12am";
-    labelTempareture.text = @"45°";
-    icon.image = [UIImage imageNamed:
-                  [[cityweather objectAtIndex:3] iconName]];
+    id hourlyWeather = [hourWeather objectAtIndex:indexPath.row];
+    
+    labelHour.text = [NSString stringWithString:[hourlyWeather dayValue]];
+    labelTempareture.text = [NSString stringWithFormat:@"%d", [hourlyWeather temperatureValue]];
+    icon.image = [UIImage imageNamed:[hourlyWeather iconName]];
     
     return cell;
     }
-    else if (collectionView == self.cv2){
+    else if (collectionView == self.weekWeatherCollectionView){
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CellDailyWeather" forIndexPath:indexPath];
 
         UILabel *labelDay = (UILabel *)[cell viewWithTag:1];
         UILabel *labelTempareture = (UILabel *)[cell viewWithTag:3];
         UIImageView *icon = (UIImageView *)[cell viewWithTag:2];
         
-        labelDay.text = [NSString stringWithString:[[cityweather objectAtIndex:indexPath.row+1] dayValue]];
+        id dayWeather = [weekWeather objectAtIndex:indexPath.row+1];
+        
+        labelDay.text = [NSString stringWithString:[dayWeather dayValue]];
         labelTempareture.text = [NSString stringWithFormat:@"%d°/%d°",
-                                 [[cityweather objectAtIndex:indexPath.row+1] temperatureMax],
-                                 [[cityweather objectAtIndex:indexPath.row+1] temperatureMin]];
-        icon.image = [UIImage imageNamed:
-                      [[cityweather objectAtIndex:indexPath.row+1] iconName]];
+                                 [dayWeather temperatureMax],
+                                 [dayWeather temperatureMin]];
+        icon.image = [UIImage imageNamed:[dayWeather iconName]];
         
         return cell;
     }
