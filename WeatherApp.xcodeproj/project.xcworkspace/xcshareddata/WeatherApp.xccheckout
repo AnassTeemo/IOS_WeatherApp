@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>08127BC0-7530-4BAA-8343-6749CF744972</string>
+	<key>IDESourceControlProjectName</key>
+	<string>WeatherApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>43A4D5AD-2EA7-4CEE-8947-60B5241EBE1F</key>
+		<string>https://github.com/AnassTeemo/IOS_WeatherApp.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>WeatherApp.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>43A4D5AD-2EA7-4CEE-8947-60B5241EBE1F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AnassTeemo/IOS_WeatherApp.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>43A4D5AD-2EA7-4CEE-8947-60B5241EBE1F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>43A4D5AD-2EA7-4CEE-8947-60B5241EBE1F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>WeatherApp</string>
+		</dict>
+	</array>
+</dict>
+</plist>

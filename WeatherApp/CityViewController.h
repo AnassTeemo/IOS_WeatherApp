@@ -11,11 +11,11 @@
 
 @interface CityViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>{
     XMLParser *xmlParser;
-    NSArray *weekWeather;
-    NSArray *hourWeather;
 }
 
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSArray *weekWeather;
+@property (strong, nonatomic) NSArray *hourWeather;
 
 @property (weak, nonatomic) IBOutlet UIImageView *weatherIcon;
 @property (weak, nonatomic) IBOutlet UILabel *labelTemperatureValue;
@@ -29,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelSunSet;
 @property (weak, nonatomic) IBOutlet UICollectionView *hourWeatherCollectionView;
 @property (weak, nonatomic) IBOutlet UICollectionView *weekWeatherCollectionView;
+
+
 
 
 @end

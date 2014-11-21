@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XMLParser.h"
+#import "CityTableViewCell.h"
 
-@interface CityTableViewController : UITableViewController
+@interface CityTableViewController : UITableViewController{
+     XMLParser *xmlParser;
+}
 
 @property (strong, nonatomic) NSMutableArray *cities;
+@property (strong, nonatomic) NSMutableArray *citiesWeekWeather;
+@property (strong, nonatomic) NSMutableArray *citiesHourWeather;
 @property (strong, nonatomic) NSString *fileName;
 
 

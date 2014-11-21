@@ -11,9 +11,7 @@
 @interface CityViewController ()
 
 @end
-
 @implementation CityViewController
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -52,50 +50,33 @@
     self.weekWeatherCollectionView.backgroundColor = [UIColor clearColor];
     //self.cv.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    xmlParser = [XMLParser new];
-    NSString *weekUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?q=%@&mode=xml&units=metric&cnt=7",self.name];
-    NSString *hourUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/?q=%@&mode=xml&units=metric",self.name];
-	
-	NSURL *weekUrl = [NSURL URLWithString:weekUrlString];
-    NSURL *hourUrl = [NSURL URLWithString:hourUrlString];
-	
-	weekWeather = [NSArray arrayWithArray:[xmlParser parseWeekWeather:weekUrl]];
-    hourWeather = [NSArray arrayWithArray:[xmlParser parseHourlyWeather:hourUrl]];
     
     
-    id dayWeather = [weekWeather objectAtIndex:0];
+    id dayWeather = [self.weekWeather objectAtIndex:0];
     
-    self.labelTemperatureValue.text = [NSString stringWithFormat:@"%d°C",
-                                       [dayWeather temperatureValue]];
+    self.labelTemperatureValue.text = [NSString stringWithFormat:@"%d°C",[dayWeather temperatureValue]];
     
     self.labelTemperatureMinMax.text = [NSString stringWithFormat:@"%d/%d°C",
                                         [dayWeather temperatureMin],
                                         [dayWeather temperatureMax]];
     
-    self.labelCloudName.text = [NSString stringWithString:
-                                [dayWeather cloudName]];
+    self.labelCloudName.text = [NSString stringWithString:[dayWeather cloudName]];
     
-    self.labelHumidity.text = [NSString stringWithFormat:@"%d%%",
-                               [dayWeather humidity]];
+    self.labelHumidity.text = [NSString stringWithFormat:@"%d%%",[dayWeather humidity]];
     
     self.labelWindSpeedDirection.text = [NSString stringWithFormat:@"%d mph %@",
                                          [dayWeather windSpeed],
                                          [dayWeather windDirection]];
                                           
-    self.labelPrecipitationValueMode.text = [NSString stringWithString:
-                                             [dayWeather precipitationMode]];
+    self.labelPrecipitationValueMode.text = [NSString stringWithString:[dayWeather precipitationMode]];
                                           
-    self.labelPressure.text = [NSString stringWithFormat:@"%d hpa",
-                               [dayWeather pressure]];
+    self.labelPressure.text = [NSString stringWithFormat:@"%d hpa",[dayWeather pressure]];
     
-    self.labelSunRise.text = [NSString stringWithString:
-                              [CityWeather sunRise]];
+    self.labelSunRise.text = [NSString stringWithString:[CityWeather sunRise]];
     
-    self.labelSunSet.text = [NSString stringWithString:
-                             [CityWeather sunSet]];
+    self.labelSunSet.text = [NSString stringWithString:[CityWeather sunSet]];
     
-    self.weatherIcon.image = [UIImage imageNamed:
-                             [dayWeather iconName]];
+    self.weatherIcon.image = [UIImage imageNamed:[dayWeather iconName]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,7 +103,7 @@
 
 -(NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (collectionView == self.weekWeatherCollectionView){
-    return [weekWeather count]-1;
+    return [self.weekWeather count]-1;
     }
     return 5;
 }
@@ -137,10 +118,10 @@
     UILabel *labelTempareture = (UILabel *)[cell viewWithTag:3];
     UIImageView *icon = (UIImageView *)[cell viewWithTag:2];
     
-    id hourlyWeather = [hourWeather objectAtIndex:indexPath.row];
+    id hourlyWeather = [self.hourWeather objectAtIndex:indexPath.row];
     
-    labelHour.text = [NSString stringWithString:[hourlyWeather dayValue]];
-    labelTempareture.text = [NSString stringWithFormat:@"%d", [hourlyWeather temperatureValue]];
+    labelHour.text = [NSString stringWithFormat:@"%@h", [hourlyWeather dayValue]];
+    labelTempareture.text = [NSString stringWithFormat:@"%d°", [hourlyWeather temperatureValue]];
     icon.image = [UIImage imageNamed:[hourlyWeather iconName]];
     
     return cell;
@@ -152,7 +133,7 @@
         UILabel *labelTempareture = (UILabel *)[cell viewWithTag:3];
         UIImageView *icon = (UIImageView *)[cell viewWithTag:2];
         
-        id dayWeather = [weekWeather objectAtIndex:indexPath.row+1];
+        id dayWeather = [self.weekWeather objectAtIndex:indexPath.row+1];
         
         labelDay.text = [NSString stringWithString:[dayWeather dayValue]];
         labelTempareture.text = [NSString stringWithFormat:@"%d°/%d°",

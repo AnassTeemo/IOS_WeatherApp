@@ -41,6 +41,9 @@
     (NSLibraryDirectory, NSUserDomainMask, YES);
     NSString *libraryDirectory = [paths objectAtIndex:0];
     
+    self.citiesWeekWeather = [NSMutableArray new];
+    self.citiesHourWeather = [NSMutableArray new];
+    
     //file name to write the data to using the documents directory:
     self.fileName = [NSString stringWithFormat:@"%@/textfile.txt",libraryDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -79,12 +82,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    id dayWeather = [[self.citiesWeekWeather objectAtIndex:indexPath.row]objectAtIndex:0];
+    
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    CityTableViewCell *cell = (CityTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     cell.textLabel.text = [self.cities objectAtIndex:indexPath.row];
-    //cell.backgroundColor = [UIColor clearColor];
+    cell.weatherIcon.image = [UIImage imageNamed:[dayWeather iconName]];
+    [cell.labelCloudName setText:[NSString stringWithString:[dayWeather cloudName]]];
+    cell.labelTemperatureValue.text = [NSString stringWithFormat:@"%d°C",[dayWeather temperatureValue]];
+    cell.labelTemperatureMax.text = [NSString stringWithFormat:@"%d°",[dayWeather temperatureMax]];
+    cell.labelTemperatureMin.text = [NSString stringWithFormat:@"%d°",[dayWeather temperatureMin]];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -145,6 +155,9 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         NSString *name = [self.cities objectAtIndex:indexPath.row];
         viewController.name = name;
+        viewController.weekWeather = [NSArray arrayWithArray:[self.citiesWeekWeather objectAtIndex:indexPath.row]];
+        viewController.hourWeather = [NSArray arrayWithArray:[self.citiesHourWeather objectAtIndex:indexPath.row]];
+        
     }
     else if ([segue.destinationViewController isKindOfClass:[NewCityViewController class]]){
         NewCityViewController *viewController = segue.destinationViewController;
@@ -157,6 +170,24 @@
 -(void)viewWillAppear:(BOOL)animated{
     NSLog(@"I'm here %@",self.cities);
     [self.tableView reloadData];
+    
+    for (id city in self.cities) {
+        xmlParser = [XMLParser new];
+        NSArray *cityWeekWeather = [NSArray new];
+        NSArray *cityHourWeather = [NSArray new];
+        
+        NSString *weekUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?q=%@&mode=xml&units=metric&cnt=7",city];
+        NSString *hourUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/?q=%@&mode=xml&units=metric",city];
+        
+        NSURL *weekUrl = [NSURL URLWithString:weekUrlString];
+        NSURL *hourUrl = [NSURL URLWithString:hourUrlString];
+        
+        cityWeekWeather = [NSArray arrayWithArray:[xmlParser parseWeekWeather:weekUrl]];
+        cityHourWeather = [NSArray arrayWithArray:[xmlParser parseHourlyWeather:hourUrl]];
+        
+        [self.citiesWeekWeather addObject:cityWeekWeather];
+        [self.citiesHourWeather addObject:cityHourWeather];
+    }
 }
 
 - (IBAction)doneAddingEndForSegue:(UIStoryboardSegue *)returnSegue {
