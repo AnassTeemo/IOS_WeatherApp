@@ -49,6 +49,7 @@
 		89D972561A0D9E0F00990369 /* CityWeather.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D972551A0D9E0F00990369 /* CityWeather.m */; };
 		89F50C501A1F700700ED86BE /* bg1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89F50C4F1A1F700700ED86BE /* bg1.jpg */; };
 		89F50C521A1F70F800ED86BE /* bg2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 89F50C511A1F70F800ED86BE /* bg2.jpg */; };
+		89F50C561A1F7BFF00ED86BE /* ReadMe.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 89F50C551A1F7BFF00ED86BE /* ReadMe.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		89D972551A0D9E0F00990369 /* CityWeather.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityWeather.m; sourceTree = "<group>"; };
 		89F50C4F1A1F700700ED86BE /* bg1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg1.jpg; sourceTree = "<group>"; };
 		89F50C511A1F70F800ED86BE /* bg2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg2.jpg; sourceTree = "<group>"; };
+		89F50C551A1F7BFF00ED86BE /* ReadMe.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ReadMe.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 				898F9FED1A0BC87700EFB75E /* Supporting Files */,
 				898F9FF51A0BC87700EFB75E /* AppDelegate.h */,
 				898F9FF61A0BC87700EFB75E /* AppDelegate.m */,
+				89F50C551A1F7BFF00ED86BE /* ReadMe.pdf */,
 				898F9FF81A0BC87700EFB75E /* Images.xcassets */,
 			);
 			path = WeatherApp;
@@ -334,6 +337,7 @@
 				898C85971A0FC1E80079BE80 /* 11d.png in Resources */,
 				898C85911A0FC1E80079BE80 /* 04d.png in Resources */,
 				898C859B1A0FC1E80079BE80 /* 50d.png in Resources */,
+				89F50C561A1F7BFF00ED86BE /* ReadMe.pdf in Resources */,
 				898C858D1A0FC1E80079BE80 /* 02d.png in Resources */,
 				898C858F1A0FC1E80079BE80 /* 03d.png in Resources */,
 				898C859C1A0FC1E80079BE80 /* 50n.png in Resources */,
