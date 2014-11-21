@@ -58,16 +58,17 @@
 
 
 - (IBAction)DoneEditing:(id)sender {
-    [self.cities addObject:[self.textField.text capitalizedString]];
-    NSLog(@"set: %@",self.cities);
+    
+    if (![self.cities containsObject:[self.textField.text capitalizedString]]) {
+        [self.cities addObject:[self.textField.text capitalizedString]];
+    }
+    NSLog(@"array: %@",self.cities);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:YES];
-    
-    NSArray *array = [self.cities allObjects];
         
-    BOOL success = [array writeToFile:self.fileName atomically:YES];
+    BOOL success = [self.cities writeToFile:self.fileName atomically:YES];
     if (!success) {
             NSLog(@"Error writing in file");
     }

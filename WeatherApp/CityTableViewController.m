@@ -55,6 +55,11 @@
          
      self.cities = [NSArray arrayWithContentsOfFile:self.fileName];
      }
+    
+    //Parsing all cities
+    for (id city in self.cities) {
+        [self getWeatherData:city];
+    }
 
     
 }
@@ -116,6 +121,8 @@
         // Delete the row from the data source
         //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.cities removeObjectAtIndex:indexPath.row];
+        [self.citiesHourWeather removeObjectAtIndex:indexPath.row];
+        [self.citiesWeekWeather removeObjectAtIndex:indexPath.row];
         BOOL success = [self.cities writeToFile:self.fileName atomically:YES];
         if (!success)
             NSLog(@"Error writing in file");
@@ -161,7 +168,7 @@
     }
     else if ([segue.destinationViewController isKindOfClass:[NewCityViewController class]]){
         NewCityViewController *viewController = segue.destinationViewController;
-        viewController.cities =[NSMutableSet setWithArray:self.cities];
+        viewController.cities =[NSMutableArray arrayWithArray:self.cities];
         viewController.fileName = self.fileName;
     }
 }
@@ -171,29 +178,34 @@
     NSLog(@"I'm here %@",self.cities);
     [self.tableView reloadData];
     
-    for (id city in self.cities) {
-        xmlParser = [XMLParser new];
-        NSArray *cityWeekWeather = [NSArray new];
-        NSArray *cityHourWeather = [NSArray new];
-        
-        NSString *weekUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?q=%@&mode=xml&units=metric&cnt=7",city];
-        NSString *hourUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/?q=%@&mode=xml&units=metric",city];
-        
-        NSURL *weekUrl = [NSURL URLWithString:weekUrlString];
-        NSURL *hourUrl = [NSURL URLWithString:hourUrlString];
-        
-        cityWeekWeather = [NSArray arrayWithArray:[xmlParser parseWeekWeather:weekUrl]];
-        cityHourWeather = [NSArray arrayWithArray:[xmlParser parseHourlyWeather:hourUrl]];
-        
-        [self.citiesWeekWeather addObject:cityWeekWeather];
-        [self.citiesHourWeather addObject:cityHourWeather];
-    }
 }
 
 - (IBAction)doneAddingEndForSegue:(UIStoryboardSegue *)returnSegue {
     NewCityViewController *viewController = returnSegue.sourceViewController;
-    self.cities = [[viewController.cities allObjects] mutableCopy];
     
+    if (![self.cities isEqualToArray:viewController.cities]) {
+        NSLog(@"equal test");
+        self.cities = [NSMutableArray arrayWithArray:viewController.cities];
+        [self getWeatherData:[self.cities lastObject]];
+    }
+}
+
+- (void)getWeatherData:(id)city{
+    xmlParser = [XMLParser new];
+    NSArray *cityWeekWeather = [NSArray new];
+    NSArray *cityHourWeather = [NSArray new];
+    
+    NSString *weekUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/daily?q=%@&mode=xml&units=metric&cnt=7",city];
+    NSString *hourUrlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast/?q=%@&mode=xml&units=metric",city];
+    
+    NSURL *weekUrl = [NSURL URLWithString:weekUrlString];
+    NSURL *hourUrl = [NSURL URLWithString:hourUrlString];
+    
+    cityWeekWeather = [NSArray arrayWithArray:[xmlParser parseWeekWeather:weekUrl]];
+    cityHourWeather = [NSArray arrayWithArray:[xmlParser parseHourlyWeather:hourUrl]];
+    
+    [self.citiesWeekWeather addObject:cityWeekWeather];
+    [self.citiesHourWeather addObject:cityHourWeather];
 }
 
 @end

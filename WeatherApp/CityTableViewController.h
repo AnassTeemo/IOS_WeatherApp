@@ -19,5 +19,5 @@
 @property (strong, nonatomic) NSMutableArray *citiesHourWeather;
 @property (strong, nonatomic) NSString *fileName;
 
-
+- (void)getWeatherData:(id)city;
 @end

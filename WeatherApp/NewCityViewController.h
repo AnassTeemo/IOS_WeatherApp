@@ -10,7 +10,7 @@
 
 @interface NewCityViewController : UIViewController
 
-@property (strong, nonatomic) NSMutableSet *cities;
+@property (strong, nonatomic) NSMutableArray *cities;
 @property (strong, nonatomic) NSString *fileName;
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
