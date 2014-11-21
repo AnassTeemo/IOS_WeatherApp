@@ -2,8 +2,8 @@
 //  CityTableViewCell.m
 //  WeatherApp
 //
-//  Created by Anass on 20/11/14.
-//  Copyright (c) 2014 Anass. All rights reserved.
+//  Created by KHRIBECH & KHOULE on 20/11/14.
+//  Copyright (c) 2014 KHRIBECH & KHOULE. All rights reserved.
 //
 
 #import "CityTableViewCell.h"

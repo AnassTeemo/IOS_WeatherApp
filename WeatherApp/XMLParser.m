@@ -2,8 +2,8 @@
 //  XMLParser.m
 //  WeatherApp
 //
-//  Created by Anass on 07/11/14.
-//  Copyright (c) 2014 Anass. All rights reserved.
+//  Created by KHRIBECH & KHOULE on 07/11/14.
+//  Copyright (c) 2014 KHRIBECH & KHOULE. All rights reserved.
 //
 
 #import "XMLParser.h"
@@ -67,7 +67,7 @@
         if (parser == weekParser){
             NSString *str = [NSString stringWithString:[attributeDict valueForKey:@"day"]];
             weatherCondition.dayValue = [XMLParser dayFromDate:str];
-            NSLog(@"%@", weatherCondition.dayValue);
+            //NSLog(@"%@", weatherCondition.dayValue);
         }
         else{
             weatherCondition.dayValue = [[attributeDict valueForKey:@"from"] substringWithRange:NSMakeRange(11,2)];

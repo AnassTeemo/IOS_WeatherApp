@@ -2,8 +2,8 @@
 //  NewCityViewController.m
 //  WeatherApp
 //
-//  Created by Anass on 06/11/14.
-//  Copyright (c) 2014 Anass. All rights reserved.
+//  Created by KHRIBECH & KHOULE on 06/11/14.
+//  Copyright (c) 2014 KHRIBECH & KHOULE. All rights reserved.
 //
 
 #import "NewCityViewController.h"
@@ -58,7 +58,7 @@
 
 
 - (IBAction)DoneEditing:(id)sender {
-    [self.cities addObject:self.textField.text];
+    [self.cities addObject:[self.textField.text capitalizedString]];
     NSLog(@"set: %@",self.cities);
 }
 

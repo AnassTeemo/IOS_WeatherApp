@@ -2,8 +2,8 @@
 //  CityTableViewController.m
 //  WeatherApp
 //
-//  Created by Anass on 06/11/14.
-//  Copyright (c) 2014 Anass. All rights reserved.
+//  Created by KHRIBECH & KHOULE on 06/11/14.
+//  Copyright (c) 2014 KHRIBECH & KHOULE. All rights reserved.
 //
 
 #import "CityTableViewController.h"
@@ -44,7 +44,7 @@
     self.citiesWeekWeather = [NSMutableArray new];
     self.citiesHourWeather = [NSMutableArray new];
     
-    //file name to write the data to using the documents directory:
+    //file name to write the data to using the library directory:
     self.fileName = [NSString stringWithFormat:@"%@/textfile.txt",libraryDirectory];
     NSFileManager *fileManager = [NSFileManager defaultManager];
      if (![fileManager fileExistsAtPath:self.fileName]) {

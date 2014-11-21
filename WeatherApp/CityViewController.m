@@ -2,8 +2,8 @@
 //  CityViewController.m
 //  WeatherApp
 //
-//  Created by Anass on 06/11/14.
-//  Copyright (c) 2014 Anass. All rights reserved.
+//  Created by KHRIBECH & KHOULE on 06/11/14.
+//  Copyright (c) 2014 KHRIBECH & KHOULE. All rights reserved.
 //
 
 #import "CityViewController.h"
@@ -24,24 +24,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    /*NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://api.openweathermap.org/data/2.5/weather?q=Paris&mode=xml&lang=fr"]];
-    NSURLResponse * response = nil;
-    NSError * error = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest
-                                          returningResponse:&response
-                                                      error:&error];
-    
-    if (error == nil)
-    {
-        NSLog(@"%@",data);
-    }
-    [self.labelField setText:self.name];*/
     
     self.navigationItem.title =[NSString stringWithString:self.name];
     
     UIGraphicsBeginImageContext(self.view.frame.size);
-    [[UIImage imageNamed:@"background.jpg"] drawInRect:self.view.bounds];
+    [[UIImage imageNamed:@"bg1.jpg"] drawInRect:self.view.bounds];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
@@ -56,7 +43,7 @@
     
     self.labelTemperatureValue.text = [NSString stringWithFormat:@"%d°C",[dayWeather temperatureValue]];
     
-    self.labelTemperatureMinMax.text = [NSString stringWithFormat:@"%d/%d°C",
+    self.labelTemperatureMinMax.text = [NSString stringWithFormat:@"%d°/%d°",
                                         [dayWeather temperatureMin],
                                         [dayWeather temperatureMax]];
     
@@ -139,8 +126,7 @@
         labelTempareture.text = [NSString stringWithFormat:@"%d°/%d°",
                                  [dayWeather temperatureMax],
                                  [dayWeather temperatureMin]];
-        icon.image = [UIImage imageNamed:[dayWeather iconName]];
-        
+        icon.image = [UIImage imageNamed:[dayWeather iconName]];        
         return cell;
     }
         return nil;
